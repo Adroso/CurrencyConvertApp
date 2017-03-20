@@ -6,19 +6,19 @@ package com.example.adroso360.currencyconvert;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.io.IOException;
+
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Scanner;
 
 public class FetchRate {
     public static JsonObject conversionRates;
     public static String updateTime;
-
+    public static Boolean exceptionRaised;
     public static void main(String[] args) {
 
     }
@@ -27,7 +27,7 @@ public class FetchRate {
         /** This pings the Fixer Currency Converter API and returns a JSON of all currency
          * conversion rates for the Base currency submitted. For simplicity sake this will be left as AUD
          * However by adding a URL builder and user input the converter can be for anything.
-        */
+         */
 
         try {
             URL fixerAPI = new URL("http://api.fixer.io/latest?base=AUD");
@@ -48,14 +48,16 @@ public class FetchRate {
             updateTime = df.format(Calendar.getInstance().getTime());
 
 
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            mainScreen.exceptionText = "Unable to Retrive Conversion Rates (ERROR: NO-INTERNET)";
+            System.out.println("Error");
             //Raised if there is an error retrieving data from the input stream
         }
 
         return conversionRates;
     }
+
 
     public static double chooseRate(String selectedRate){
         /** This function takes a string of the currencyCode in and returns

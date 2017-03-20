@@ -2,9 +2,11 @@ package com.example.adroso360.currencyconvert;
 /**
  * Created by Adroso360 on 11/3/17
  */
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,11 +22,13 @@ public class SettingsScreen extends AppCompatActivity {
     private Button whiteBgButton;
     private Button greyBgButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
 
+        /** ======= Settings Activity Initial Setup Section ======= */
         mainButton = (Button)findViewById(R.id.mainButton);
         rateUpdate = (Button)findViewById(R.id.rateUpdate);
        whiteBgButton = (Button)findViewById(R.id.whiteBgButton);
@@ -35,6 +39,9 @@ public class SettingsScreen extends AppCompatActivity {
         View settingsScreenView = findViewById(R.id.activity_settings_screen);
         settingsScreenView.setBackgroundColor(bg);
 
+        /** ======= END Settings Activity Initial Setup Section ======= */
+
+        /** ======= Listener + Logic Section ======= */
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +95,9 @@ public class SettingsScreen extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
+        /** ======= END Listener + Logic Section ======= */
+
         });
     }
 }

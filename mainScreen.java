@@ -3,10 +3,12 @@ package com.example.adroso360.currencyconvert;
  * Created by Adroso360 on 11/3/17
  */
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,20 +24,22 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class mainScreen extends AppCompatActivity {
-
+    public static  String exceptionText;
     public static String convertingCountry;
     private EditText homeAmount;
     private EditText awayAmount;
-    private TextView statusText;
     private TextView dateStatus;
     private TextView awayCurrency;
     private Button settingsButt;
+    private TextView statusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+
+        /** =======Initial App Set Up Section======= */
         SharedPreferences sharedBackground = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         int bg = sharedBackground.getInt("background", Color.WHITE);
         View mainScreenView = findViewById(R.id.activity_main_screen);
@@ -48,6 +52,8 @@ public class mainScreen extends AppCompatActivity {
 
         //Updates the currency rates upon opening of activity.
         FetchRate.updateRates();
+        if (FetchRate.conversionRates == null){
+        }
 
         //Finding all UI elements
         homeAmount = (EditText)findViewById(R.id.homeAmount);
@@ -67,14 +73,15 @@ public class mainScreen extends AppCompatActivity {
             updateRateText(convertingCountry, "$");
         } else{
             updateRateText(convertingCountry, Currency.getInstance(convertingCountry).getSymbol(Locale.US));
-//
         }
 
         statusText.setText("Awaiting Amount");
         String dateText = ("Rates Updated: " + FetchRate.getRefreshDate());
         dateStatus.setText(dateText);
 
+        /** =======END Initial App Set Up Section======= */
 
+        /** =======Listener + logic Section======= */
         // Listener for Home Currency
 
         homeAmount.addTextChangedListener(new TextWatcher() {
@@ -134,4 +141,6 @@ public class mainScreen extends AppCompatActivity {
     private void updateRateText(String currencyName, String currencySymbol){
         awayCurrency.setText(currencyName + " " + currencySymbol);
     }
+
+    /** =======END Listener + logic Section======= */
 }

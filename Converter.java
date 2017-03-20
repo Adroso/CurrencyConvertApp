@@ -3,7 +3,6 @@ package com.example.adroso360.currencyconvert;
 /**
  * Created by Adroso360 on 11/3/17
  */
-import java.text.DecimalFormat;
 public class Converter {
 
     public static double convertCurrency(double homeCurrency, double conversionRate){
