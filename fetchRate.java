@@ -4,8 +4,6 @@ package com.example.adroso360.currencyconvert;
  * Created by Adroso360 on 11/3/17
  */
 
-import android.net.NetworkRequest;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
@@ -25,9 +23,11 @@ public class FetchRate {
 
     }
     public static JsonObject updateRates() {
-        // This pings the Fixer Currency Converter API and returns a JSON of all currency conversion rates for the Base currency submitted.
-        //JsonObject conversionRates = null;
 
+        /** This pings the Fixer Currency Converter API and returns a JSON of all currency
+         * conversion rates for the Base currency submitted. For simplicity sake this will be left as AUD
+         * However by adding a URL builder and user input the converter can be for anything.
+        */
 
         try {
             URL fixerAPI = new URL("http://api.fixer.io/latest?base=AUD");
@@ -51,18 +51,24 @@ public class FetchRate {
 
         } catch (IOException e) {
             e.printStackTrace();
+            //Raised if there is an error retrieving data from the input stream
         }
 
         return conversionRates;
     }
 
     public static double chooseRate(String selectedRate){
+        /** This function takes a string of the currencyCode in and returns
+         *  the matching conversion rate in the JSON File.
+         */
         JsonObject listRates = conversionRates.get("rates").getAsJsonObject();
         return listRates.get(selectedRate).getAsDouble();
 
     }
 
     public static String getRefreshDate(){
+        /** Used to update the status text to when the Currency Rate JSON was last updated.
+         */
         return conversionRates.get("date").getAsString() + " " + updateTime;
 
     }

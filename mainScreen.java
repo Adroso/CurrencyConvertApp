@@ -1,16 +1,24 @@
 package com.example.adroso360.currencyconvert;
-
+/**
+ * Created by Adroso360 on 11/3/17
+ */
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.StrictMode;
 
+import java.util.Currency;
+import java.util.Locale;
 import java.util.Objects;
 
 public class mainScreen extends AppCompatActivity {
@@ -28,14 +36,20 @@ public class mainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        //allows HTTP requests
+        SharedPreferences sharedBackground = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        int bg = sharedBackground.getInt("background", Color.WHITE);
+        View mainScreenView = findViewById(R.id.activity_main_screen);
+        mainScreenView.setBackgroundColor(bg);
+
+        //Allows HTTP requests from Android + Auth in Manifest.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Updates the currency rates upon open.
+        //Updates the currency rates upon opening of activity.
         FetchRate.updateRates();
 
+        //Finding all UI elements
         homeAmount = (EditText)findViewById(R.id.homeAmount);
         awayAmount = (EditText)findViewById(R.id.awayAmount);
         statusText = (TextView)findViewById(R.id.statusText);
@@ -43,12 +57,17 @@ public class mainScreen extends AppCompatActivity {
         awayCurrency = (TextView)findViewById(R.id.awayCurrency);
         settingsButt = (Button)findViewById(R.id.settingsButt);
 
-        //App Setup
-
+        //App Logic Initial Setup
         if (Objects.equals(convertingCountry, null)){
             convertingCountry = "USD";
-        } else {
-            awayCurrency.setText(convertingCountry +" $");
+            updateRateText(convertingCountry, Currency.getInstance(convertingCountry).getSymbol(Locale.US));
+
+        } else if(Objects.equals(convertingCountry, "NZD")){
+            //This is to prevent getSymbol() from Printing "NZ$" instead of the required "$"
+            updateRateText(convertingCountry, "$");
+        } else{
+            updateRateText(convertingCountry, Currency.getInstance(convertingCountry).getSymbol(Locale.US));
+//
         }
 
         statusText.setText("Awaiting Amount");
@@ -56,7 +75,7 @@ public class mainScreen extends AppCompatActivity {
         dateStatus.setText(dateText);
 
 
-        // Listener for home Currency
+        // Listener for Home Currency
 
         homeAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,10 +92,9 @@ public class mainScreen extends AppCompatActivity {
                     String convertedAmount = Double.toString(Converter.convertCurrency(homeDouble, FetchRate.chooseRate(convertingCountry)));
                     awayAmount.setText(convertedAmount);
                 } catch (Exception e){
-                    //error
+                    //Catches empty textField Error.
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -84,6 +102,7 @@ public class mainScreen extends AppCompatActivity {
         });
 
         //Listener for Away Currency
+        //TODO If time permits Allow backwards conversion with this listener
         awayAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,17 +110,8 @@ public class mainScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(final CharSequence awayS, int start, int before, int count) {
 
-//               statusText.setText("Converting " + awayCurrency.getText() + " to AUD $");
-//
-//                try {
-//                    double awayDouble = Double.parseDouble(s.toString());
-//                    String convertedAmountAway = Double.toString(Converter.convertCurrencyReverse(awayDouble, FetchRate.chooseRate("USD")));
-//                    homeAmount.setText(convertedAmountAway);
-//                } catch (Exception e){
-//                    //error
-//                }
             }
 
             @Override
@@ -109,6 +119,7 @@ public class mainScreen extends AppCompatActivity {
 
             }
         });
+
 
         settingsButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,5 +128,10 @@ public class mainScreen extends AppCompatActivity {
             }
         });
 
+
+
+    }
+    private void updateRateText(String currencyName, String currencySymbol){
+        awayCurrency.setText(currencyName + " " + currencySymbol);
     }
 }
