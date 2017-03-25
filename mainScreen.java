@@ -3,35 +3,27 @@ package com.example.adroso360.currencyconvert;
  * Created by Adroso360 on 11/3/17
  */
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.os.StrictMode;
-import android.widget.Toast;
 
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 
 public class mainScreen extends AppCompatActivity {
-    public static  String exceptionText;
     public static String convertingCountry;
-    private EditText homeAmount;
     private EditText awayAmount;
-    private TextView dateStatus;
     private TextView awayCurrency;
-    private Button settingsButt;
     private TextView statusText;
 
 
@@ -57,12 +49,12 @@ public class mainScreen extends AppCompatActivity {
         FetchRate.updateRates();
 
         //Finding all UI elements
-        homeAmount = (EditText)findViewById(R.id.homeAmount);
+        EditText homeAmount = (EditText) findViewById(R.id.homeAmount);
         awayAmount = (EditText)findViewById(R.id.awayAmount);
         statusText = (TextView)findViewById(R.id.statusText);
-        dateStatus = (TextView)findViewById(R.id.dateStatus);
+        TextView dateStatus = (TextView) findViewById(R.id.dateStatus);
         awayCurrency = (TextView)findViewById(R.id.awayCurrency);
-        settingsButt = (Button)findViewById(R.id.settingsButt);
+        Button settingsButt = (Button) findViewById(R.id.settingsButt);
 
         //App Logic Initial Setup
         if (Objects.equals(convertingCountry, null)){

@@ -2,24 +2,19 @@ package com.example.adroso360.currencyconvert;
 /**
  * Created by Adroso360 on 11/3/17
  */
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.content.Context;
 
 public class SettingsScreen extends AppCompatActivity {
-    private Button rateUpdate;
-    private Button whiteBgButton;
-    private Button greyBgButton;
 
 
     @Override
@@ -29,9 +24,9 @@ public class SettingsScreen extends AppCompatActivity {
 
         /** ======= Settings Activity Initial Setup Section ======= */
         Button mainButton = (Button) findViewById(R.id.mainButton);
-        rateUpdate = (Button)findViewById(R.id.rateUpdate);
-       whiteBgButton = (Button)findViewById(R.id.whiteBgButton);
-       greyBgButton = (Button)findViewById(R.id.greyBgButton);
+        Button rateUpdate = (Button) findViewById(R.id.rateUpdate);
+        Button whiteBgButton = (Button) findViewById(R.id.whiteBgButton);
+        Button greyBgButton = (Button) findViewById(R.id.greyBgButton);
 
         final SharedPreferences sharedBackground = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         int bg = sharedBackground.getInt("background", Color.WHITE);
