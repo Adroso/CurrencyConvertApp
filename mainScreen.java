@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.StrictMode;
+import android.widget.Toast;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -32,6 +33,8 @@ public class mainScreen extends AppCompatActivity {
     private TextView awayCurrency;
     private Button settingsButt;
     private TextView statusText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,6 @@ public class mainScreen extends AppCompatActivity {
 
         //Updates the currency rates upon opening of activity.
         FetchRate.updateRates();
-        if (FetchRate.conversionRates == null){
-        }
 
         //Finding all UI elements
         homeAmount = (EditText)findViewById(R.id.homeAmount);
@@ -99,6 +100,7 @@ public class mainScreen extends AppCompatActivity {
                     String convertedAmount = Double.toString(Converter.convertCurrency(homeDouble, FetchRate.chooseRate(convertingCountry)));
                     awayAmount.setText(convertedAmount);
                 } catch (Exception e){
+                    awayAmount.setText("");
                     //Catches empty textField Error.
                 }
             }
@@ -109,7 +111,7 @@ public class mainScreen extends AppCompatActivity {
         });
 
         //Listener for Away Currency
-        //TODO If time permits Allow backwards conversion with this listener
+        //TODO If time permits make conversion backwards compadible
         awayAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

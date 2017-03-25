@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.content.Context;
 
 public class SettingsScreen extends AppCompatActivity {
-    private Button mainButton;
     private Button rateUpdate;
     private Button whiteBgButton;
     private Button greyBgButton;
@@ -29,7 +28,7 @@ public class SettingsScreen extends AppCompatActivity {
         setContentView(R.layout.activity_settings_screen);
 
         /** ======= Settings Activity Initial Setup Section ======= */
-        mainButton = (Button)findViewById(R.id.mainButton);
+        Button mainButton = (Button) findViewById(R.id.mainButton);
         rateUpdate = (Button)findViewById(R.id.rateUpdate);
        whiteBgButton = (Button)findViewById(R.id.whiteBgButton);
        greyBgButton = (Button)findViewById(R.id.greyBgButton);
