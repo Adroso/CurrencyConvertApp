@@ -16,8 +16,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class FetchRate {
-    public static JsonObject conversionRates;
-    public static String updateTime;
+    private static JsonObject conversionRates;
+    private static String updateTime;
     public static void main(String[] args) {
 
     }
@@ -51,7 +51,8 @@ public class FetchRate {
             //Raised if there is an error retrieving data from the input stream
             e.printStackTrace();
             JsonParser parserException = new JsonParser();
-            String backupRates = "{\"base\":\"AUD\",\"date\":\"2017-03-22\",\"rates\":{\"BGN\":1.3885,\"BRL\":2.3771,\"CAD\":1.0264,\"CHF\":0.76061,\"CNY\":5.2842,\"CZK\":19.183,\"DKK\":5.2799,\"GBP\":0.61614,\"HKD\":5.9597,\"HRK\":5.2597,\"HUF\":219.48,\"IDR\":10226.0,\"ILS\":2.8043,\"INR\":50.192,\"JPY\":85.241,\"KRW\":859.08,\"MXN\":14.688,\"MYR\":3.3968,\"NOK\":6.4932,\"NZD\":1.0899,\"PHP\":38.529,\"PLN\":3.0396,\"RON\":3.2365,\"RUB\":44.477,\"SEK\":6.7517,\"SGD\":1.0726,\"THB\":26.569,\"TRY\":2.7798,\"USD\":0.76722,\"ZAR\":9.6628,\"EUR\":0.70992}}";
+            //Backup Rates to be used if the device has no internet connection
+            String backupRates = "{\"base\":\"AUD\",\"date\":\"2017-03-31\",\"rates\":{\"BGN\":1.3988,\"BRL\":2.4174,\"CAD\":1.0202,\"CHF\":0.76498,\"CNY\":5.2669,\"CZK\":19.332,\"DKK\":5.3196,\"GBP\":0.61188,\"HKD\":5.9415,\"HRK\":5.3258,\"HUF\":220.01,\"IDR\":10183.0,\"ILS\":2.7788,\"INR\":49.632,\"JPY\":85.503,\"KRW\":854.31,\"MXN\":14.317,\"MYR\":3.3839,\"NOK\":6.5572,\"NZD\":1.0949,\"PHP\":38.376,\"PLN\":3.0228,\"RON\":3.256,\"RUB\":43.136,\"SEK\":6.8175,\"SGD\":1.0685,\"THB\":26.265,\"TRY\":2.7817,\"USD\":0.76463,\"ZAR\":10.185,\"EUR\":0.71521}}";
             conversionRates = parserException.parse(backupRates).getAsJsonObject();
         }
 
@@ -59,7 +60,7 @@ public class FetchRate {
     }
 
 
-    public static double chooseRate(String selectedRate){
+    static double chooseRate(String selectedRate){
         /** This function takes a string of the currencyCode in and returns
          *  the matching conversion rate in the JSON File.
          */
@@ -68,7 +69,7 @@ public class FetchRate {
 
     }
 
-    public static String getRefreshDate(){
+    static String getRefreshDate(){
         /** Used to update the status text to when the Currency Rate JSON was last updated.
          * This also will add an error message when up to date rates could not be retrived due to
          * internet issues.

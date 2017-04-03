@@ -5,7 +5,7 @@ package com.example.adroso360.currencyconvert;
  */
 class Converter {
 
-    public static double convertCurrency(double homeCurrency, double conversionRate){
+    static double convertCurrency(double homeCurrency, double conversionRate){
         /**
          * Simple Currency Conversion with Rounding to 2 decimal Places
          */
@@ -13,7 +13,7 @@ class Converter {
         return Math.round((homeCurrency * conversionRate)*100.0)/100.0;
     }
 
-    public static double convertCurrencyReverse(double homeCurrency, double conversionRate){
+    static double convertCurrencyReverse(double homeCurrency, double conversionRate){
         /**
          * Simple Reverse Currency Conversion with Rounding to 2 decimal Places
          */

@@ -25,6 +25,7 @@ public class mainScreen extends AppCompatActivity {
     private EditText awayAmount;
     private TextView awayCurrency;
     private TextView statusText;
+    //private Boolean homeToAway;
 
 
 
@@ -49,7 +50,7 @@ public class mainScreen extends AppCompatActivity {
         FetchRate.updateRates();
 
         //Finding all UI elements
-        EditText homeAmount = (EditText) findViewById(R.id.homeAmount);
+        final EditText homeAmount = (EditText) findViewById(R.id.homeAmount);
         awayAmount = (EditText)findViewById(R.id.awayAmount);
         statusText = (TextView)findViewById(R.id.statusText);
         TextView dateStatus = (TextView) findViewById(R.id.dateStatus);
@@ -91,6 +92,7 @@ public class mainScreen extends AppCompatActivity {
                     double homeDouble = Double.parseDouble(s.toString());
                     String convertedAmount = Double.toString(Converter.convertCurrency(homeDouble, FetchRate.chooseRate(convertingCountry)));
                     awayAmount.setText(convertedAmount);
+                    //homeToAway = true;
                 } catch (Exception e){
                     awayAmount.setText("");
                     //Catches empty textField Error.
@@ -101,26 +103,6 @@ public class mainScreen extends AppCompatActivity {
 
             }
         });
-
-        //Listener for Away Currency
-        //TODO If time permits make conversion backwards compadible
-        awayAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(final CharSequence awayS, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
 
         settingsButt.setOnClickListener(new View.OnClickListener() {
             @Override
